@@ -1,30 +1,19 @@
-from decimal import Decimal
-from typing import Callable, List
+class Operation:
 
-from calculator.calculation import Calculation
+    def __init__(self, a, b, op):
+        self.a = a
+        self.b = b
+        self.op = op
 
-class Calculations:
-    history: List[Calculation] = []
+    @staticmethod   
+    def create(a, b, op):
+        return Operation(a, b, op)
 
-    @classmethod
-    def add_calculation(cls, calculation: Calculation):
-        cls.history.append(calculation)
+    def perform(self):
+        return self.op(self.a, self.b)
 
-    @classmethod
-    def get_history(cls) -> List[Calculation]:
-        return cls.history
-
-    @classmethod
-    def clear_history(cls):
-        cls.history.clear()
-
-    @classmethod
-    def get_latest(cls) -> Calculation:
-        if cls.history:
-            return cls.history[-1]
-        return None
-
-    @classmethod
-    def find_by_operation(cls, operation_name: str) -> List[Calculation]:
-        return [calc for calc in cls.history if calc.operation.__name__ == operation_name]
-
+    def __str__(self):
+        return f"{self.op.__name__}({self.a}, {self.b})"
+    
+    def __repr__(self):
+        return f"{self.op.__name__}({self.a}, {self.b})"
